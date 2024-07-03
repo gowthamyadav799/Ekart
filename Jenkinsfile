@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Git Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/re24ddy/Ekart.git'
+                git branch: 'main', url: 'https://github.com/gowthamyadav799.git'
             }
         }
         
@@ -85,7 +85,7 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'DockerHubPass', toolName: 'docker') {
                         sh "docker build -t shopping-cart -f docker/Dockerfile ."
-                        sh "docker tag  shopping-cart harish117/shopping-cart:latest"
+                        sh "docker tag  shopping-cart gowtham799/shopping-cart:latest"
                         
                     }
                 }
@@ -94,14 +94,14 @@ pipeline {
         stage('Containerize And Test') {
             steps {
                 script{
-                    sh 'docker run -d --name shopping-cart harish117/shopping-cart:latest && sleep 10 && docker stop shopping-cart'
+                    sh 'docker run -d --name shopping-cart gowtham799/shopping-cart:latest && sleep 10 && docker stop shopping-cart'
                 }
             }
         }
         
         stage('Trivy Scan') {
             steps {
-                sh "trivy image harish117/shopping-cart:latest > trivy-report.txt "
+                sh "trivy image gowtham799/shopping-cart:latest > trivy-report.txt "
                 
             }
         }
@@ -110,7 +110,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'DockerHubPass', toolName: 'docker') {
-                        sh "docker push harish117/shopping-cart:latest"
+                        sh "docker push gowtham799/shopping-cart:latest"
                     }
                 }
                  
